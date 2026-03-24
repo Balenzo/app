@@ -282,12 +282,37 @@ function searchPlayer(){
 // Profiel
 function setProfile(){
   let link = prompt("Plak je Cuescore profiel link");
-  if(link){ localStorage.setItem("cuescoreProfile", link); alert("Profiel opgeslagen"); }
+  
+  if(link){
+    // Opslaan lokaal
+    localStorage.setItem("cuescoreProfile", link);
+
+    // Backup opslaan
+    localStorage.setItem("cuescoreProfile_backup", link);
+
+    alert("Profiel opgeslagen");
+  }
 }
+
 function openProfile(){
   let link = localStorage.getItem("cuescoreProfile");
-  if(link) window.open(link);
-  else alert("Stel eerst je profiel in");
+
+  // Als profiel weg is → herstel uit backup
+  if(!link){
+    let backup = localStorage.getItem("cuescoreProfile_backup");
+    
+    if(backup){
+      localStorage.setItem("cuescoreProfile", backup);
+      link = backup;
+      alert("Profiel automatisch hersteld 👍");
+    }
+  }
+
+  if(link){
+    window.open(link);
+  } else {
+    alert("Stel eerst je profiel in");
+  }
 }
 
 // PWA install
