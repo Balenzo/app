@@ -1,40 +1,37 @@
 const CACHE_NAME = "app-cache-v2";
 
-// Install → nieuwe service worker meteen activeren
+// Install
 self.addEventListener("install", (event) => {
-  console.log("Service Worker geïnstalleerd");
+  console.log("SW geïnstalleerd");
   self.skipWaiting();
 });
 
-// Activate → oude cache verwijderen
+// Activate
 self.addEventListener("activate", (event) => {
-  console.log("Service Worker geactiveerd");
+  console.log("SW geactiveerd");
 
   event.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
+    caches.keys().then((keys) =>
+      Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
-            console.log("Oude cache verwijderd:", key);
             return caches.delete(key);
           }
         })
-      );
-    })
+      )
+    )
   );
 
   self.clients.claim();
 });
 
-// Fetch → altijd eerst netwerk, fallback naar cache
+// Fetch (altijd nieuwste versie)
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     fetch(event.request)
       .then((response) => {
         return response;
       })
-      .catch(() => {
-        return caches.match(event.request);
-      })
+      .catch(() => caches.match(event.request))
   );
 });
