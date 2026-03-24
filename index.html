@@ -11,19 +11,24 @@
 <link rel="icon" type="image/png" sizes="192x192" href="icon.png">
 <meta name="theme-color" content="#000000">
 
+<!-- STAP 1: Cache-control meta tags -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 <style>
 /* Algemene body styling */
 body { 
   font-family: Arial, Helvetica, sans-serif; 
-  background: #000000; /* zwarte achtergrond */
-  color: #ffffff;       /* witte tekst */
+  background: #000000;
+  color: #ffffff;
   margin: 0; 
   text-align: center; 
 }
 
 /* Header */
 .header { 
-  background: #000000; /* zwart */
+  background: #000000;
   padding: 30px 20px; 
 }
 
@@ -44,14 +49,14 @@ body {
   margin-bottom: 10px; 
   font-size: 14px; 
   letter-spacing: 1px; 
-  color: #ffffff; /* wit */
+  color: #ffffff;
 }
 
 /* Buttons styling */
 .button { 
   display: block; 
-  background: #8B0000; /* donkerrood */
-  color: #ffffff;       /* wit */
+  background: #8B0000;
+  color: #ffffff;
   padding: 18px; 
   border-radius: 12px; 
   text-decoration: none; 
@@ -64,7 +69,7 @@ body {
 }
 
 .button:hover { 
-  background: #600000; /* nog donkerder bij hover */
+  background: #600000;
 }
 
 .button.profile { 
@@ -116,12 +121,12 @@ input {
 <div class="section">TORNOOIEN</div>
 
 <div class="favItem" data-id="tournament-belgium">
-  <a class="button" href="https://cuescore.com/tournaments/?c=1000237" target="_blank">🇧🇪 Tornooien België</a>
+  <a class="button" href="https://cuescore.com/tournaments/?c=1000237?v=2" target="_blank">🇧🇪 Tornooien België</a>
   <span class="favStar">☆</span>
 </div>
 
 <div class="favItem" data-id="tournament-netherlands">
-  <a class="button" href="https://cuescore.com/tournaments/?c=1000231" target="_blank">🇳🇱 Tornooien Nederland</a>
+  <a class="button" href="https://cuescore.com/tournaments/?c=1000231?v=2" target="_blank">🇳🇱 Tornooien Nederland</a>
   <span class="favStar">☆</span>
 </div>
 
@@ -129,22 +134,22 @@ input {
 <div class="section">COMPETITIES</div>
 
 <div class="favItem" data-id="competition-be1">
-  <a class="button" href="https://cuescore.com/tournament/%2A%2A%2ACOMPETITIE+EERSTE+PROVINCIALE+BPBF+VLAANDEREN+SEIZOEN+2026%2A%2A%2A/74130085" target="_blank">🏆 Competitie BE Eerste Klasse</a>
+  <a class="button" href="https://cuescore.com/tournament/%2A%2A%2ACOMPETITIE+EERSTE+PROVINCIALE+BPBF+VLAANDEREN+SEIZOEN+2026%2A%2A%2A/74130085?v=2" target="_blank">🏆 Competitie BE Eerste Klasse</a>
   <span class="favStar">☆</span>
 </div>
 
 <div class="favItem" data-id="competition-be2">
-  <a class="button" href="https://cuescore.com/tournament/%2A%2A%2ACOMPETITIE+TWEEDE+PROVINCIALE+BPBF+VLAANDEREN+SEIZOEN+2026%2A%2A%2A/74130109" target="_blank">🏆 Competitie BE Tweede Klasse</a>
+  <a class="button" href="https://cuescore.com/tournament/%2A%2A%2ACOMPETITIE+TWEEDE+PROVINCIALE+BPBF+VLAANDEREN+SEIZOEN+2026%2A%2A%2A/74130109?v=2" target="_blank">🏆 Competitie BE Tweede Klasse</a>
   <span class="favStar">☆</span>
 </div>
 
 <div class="favItem" data-id="competition-be3">
-  <a class="button" href="https://cuescore.com/tournament/%2A%2A%2ACOMPETITIE+DERDE+PROVINCIALE+BPBF+VLAANDEREN+SEIZOEN+2026%2A%2A%2A/74130127" target="_blank">🏆 Competitie BE Derde Klasse</a>
+  <a class="button" href="https://cuescore.com/tournament/%2A%2A%2ACOMPETITIE+DERDE+PROVINCIALE+BPBF+VLAANDEREN+SEIZOEN+2026%2A%2A%2A/74130127?v=2" target="_blank">🏆 Competitie BE Derde Klasse</a>
   <span class="favStar">☆</span>
 </div>
 
 <div class="favItem" data-id="competition-be-beker">
-  <a class="button" href="https://cuescore.com/tournament/%2A%2A%2ABEKER%252FCOUPE+BPBF+VLAANDEREN+2026%2A%2A%2A/74130139" target="_blank">🏆 Belgische Beker</a>
+  <a class="button" href="https://cuescore.com/tournament/%2A%2A%2ABEKER%252FCOUPE+BPBF+VLAANDEREN+2026%2A%2A%2A/74130139?v=2" target="_blank">🏆 Belgische Beker</a>
   <span class="favStar">☆</span>
 </div>
 
@@ -152,27 +157,27 @@ input {
 <div class="section">BREAK & PLAY</div>
 
 <div class="favItem" data-id="bepoule1">
-  <a class="button" href="https://cuescore.com/tournament/POULE+1+BREAK+%2526+PLAY+-WINTER+2025-2026+%2AClubcompetitie%2A/72368467" target="_blank">🏆 Break & Play Poule 1</a>
+  <a class="button" href="https://cuescore.com/tournament/POULE+1+BREAK+%2526+PLAY+-ZOMER+2026+%2AClubcompetitie%2A/79104529?v=2" target="_blank">🏆 Break & Play Poule 1</a>
   <span class="favStar">☆</span>
 </div>
 
 <div class="favItem" data-id="bepoule2">
-  <a class="button" href="https://cuescore.com/tournament/POULE+2+BREAK+%2526+PLAY+-WINTER+2025-2026+%2AClubcompetitie%2A/72368668" target="_blank">🏆 Break & Play Poule 2</a>
+  <a class="button" href="https://cuescore.com/tournament/POULE+2+BREAK+%2526+PLAY+-ZOMER+2026+%2AClubcompetitie%2A/79105222?v=2" target="_blank">🏆 Break & Play Poule 2</a>
   <span class="favStar">☆</span>
 </div>
 
 <div class="favItem" data-id="bepoule3">
-  <a class="button" href="https://cuescore.com/tournament/POULE+3+BREAK+%2526+PLAY+-WINTER+2025-2026+%2AClubcompetitie%2A/72368791" target="_blank">🏆 Break & Play Poule 3</a>
+  <a class="button" href="https://cuescore.com/tournament/POULE+3+BREAK+%2526+PLAY+-ZOMER+2026+%2AClubcompetitie%2A/79105237?v=2" target="_blank">🏆 Break & Play Poule 3</a>
   <span class="favStar">☆</span>
 </div>
 
 <div class="favItem" data-id="bepoule4">
-  <a class="button" href="https://cuescore.com/tournament/POULE+4+BREAK+%2526+PLAY+-WINTER+2025-2026+%2AClubcompetitie%2A/72369007" target="_blank">🏆 Break & Play Poule 4</a>
+  <a class="button" href="https://cuescore.com/tournament/POULE+4+BREAK+%2526+PLAY+-ZOMER+2026+%2AClubcompetitie%2A/79105255?v=2" target="_blank">🏆 Break & Play Poule 4</a>
   <span class="favStar">☆</span>
 </div>
 
 <div class="favItem" data-id="bepoule5">
-  <a class="button" href="https://cuescore.com/tournament/POULE+5+BREAK+%2526+PLAY+-WINTER+2025-2026+%2AClubcompetitie%2A/72369142" target="_blank">🏆 Break & Play Poule 5</a>
+  <a class="button" href="https://cuescore.com/tournament/POULE+5+BREAK+%2526+PLAY+-ZOMER+2026+%2AClubcompetitie%2A/79105273?v=2" target="_blank">🏆 Break & Play Poule 5</a>
   <span class="favStar">☆</span>
 </div>
 
@@ -180,12 +185,12 @@ input {
 <div class="section">CLUB</div>
 
 <div class="favItem" data-id="club-page">
-  <a class="button" href="https://cuescore.com/bal-enzobilliardsdarts" target="_blank">🎱 Clubpagina</a>
+  <a class="button" href="https://cuescore.com/bal-enzobilliardsdarts?v=2" target="_blank">🎱 Clubpagina</a>
   <span class="favStar">☆</span>
 </div>
 
 <div class="favItem" data-id="club-live">
-  <a class="button" href="https://cuescore.com/venue/table/jumbotron/?venueId=1280972&branchId=1" target="_blank">📺 Live Scores</a>
+  <a class="button" href="https://cuescore.com/venue/table/jumbotron/?venueId=1280972&branchId=1?v=2" target="_blank">📺 Live Scores</a>
   <span class="favStar">☆</span>
 </div>
 
