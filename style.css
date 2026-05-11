@@ -1,0 +1,510 @@
+/* =========================
+   BASIS
+========================= */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background: #000;
+  color: #fff;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+}
+
+/* =========================
+   SCHERMEN
+========================= */
+.screen {
+  display: none;
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  background: #000;
+  position: relative;
+  z-index: 1;
+  padding-bottom: calc(110px + env(safe-area-inset-bottom));
+}
+
+.screen.active {
+  display: block;
+}
+
+/* =========================
+   HERO
+========================= */
+.hero {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.85)),
+    url('hero.jpg') center center / cover no-repeat;
+}
+
+.hero-logo {
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  max-width: 45%;
+  z-index: 2;
+}
+
+.hero-content {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 28px;
+  z-index: 2;
+  text-align: center;
+}
+
+.hero-content h1 {
+  margin: 0 0 8px;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.05;
+  text-align: center;
+}
+
+.hero-content p {
+  margin: 0;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+}
+
+.hero-content p {
+  margin: 0;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* =========================
+   SECTIES
+========================= */
+.section-block {
+  padding: 24px 20px 0;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: #ff4d4d;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* =========================
+   FAVORIETEN
+========================= */
+.favorites-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.favorites-row::-webkit-scrollbar {
+  display: none;
+}
+
+.favorite-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+  min-width: 120px;
+  padding: 18px 14px;
+
+  background: linear-gradient(180deg, #1a1a1a, #111);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 18px;
+
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+}
+
+.favorite-icon {
+  font-size: 26px;
+  margin-bottom: 8px;
+}
+
+.favorite-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* =========================
+   SNELLE ACTIES
+========================= */
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.quick-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 18px 12px;
+  border-radius: 18px;
+
+  background: linear-gradient(180deg, #b00000, #7a0000);
+  box-shadow: 0 8px 24px rgba(139, 0, 0, 0.35);
+
+  text-align: center;
+  text-decoration: none !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+
+.quick-card * {
+  color: #fff !important;
+  text-decoration: none !important;
+}
+
+.quick-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.quick-title {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* =========================
+   PAGINA HEADER
+========================= */
+.page-header {
+  padding: 28px 20px 20px;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+/* =========================
+   TABS
+========================= */
+.tab-bar {
+  display: flex;
+  gap: 8px;
+  padding: 0 20px 20px;
+}
+
+.tab {
+  flex: 1;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  background: #1c1c1c;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: linear-gradient(180deg, #d60000, #8b0000);
+}
+
+/* =========================
+   TAB CONTENT
+========================= */
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* =========================
+   CONTENT
+========================= */
+.content {
+  padding: 0 20px;
+}
+
+/* =========================
+   COMPETITIEKAARTEN
+========================= */
+.competition-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  width: 100%;
+  padding: 18px;
+  margin-bottom: 14px;
+
+  background: linear-gradient(180deg, #181818, #101010);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 18px;
+
+  text-decoration: none;
+  color: #fff;
+}
+
+button.competition-card {
+  border: none;
+  font: inherit;
+  text-align: left;
+}
+
+.competition-icon {
+  font-size: 28px;
+}
+
+.competition-info {
+  flex: 1;
+}
+
+.competition-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.competition-subtitle {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.competition-arrow {
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* =========================
+   BOTTOM NAVIGATION
+========================= */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 100%;
+  max-width: 430px;
+
+  display: flex;
+
+  background: rgba(10, 10, 10, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+
+  padding-bottom: env(safe-area-inset-bottom);
+
+  z-index: 99999;
+}
+
+.nav-item {
+  flex: 1;
+
+  border: none;
+  background: none;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+
+  font-size: 20px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  padding: 12px 8px calc(12px + env(safe-area-inset-bottom));
+}
+
+.nav-item.active {
+  color: #ff4d4d;
+}
+
+.nav-label {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* =========================
+   MODAL
+========================= */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000;
+
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  /* Scrollbaar */
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+
+  /* Ruimte rondom */
+  padding: 20px;
+}
+
+.modal.show {
+  display: block;
+}
+
+/* Modal box */
+.modal-content {
+  width: 100%;
+  max-width: 420px;
+  margin: 40px auto calc(40px + env(safe-area-inset-bottom));
+
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 24px;
+  padding: 24px;
+}
+
+.modal-content h3 {
+  margin: 0 0 20px;
+  font-size: 22px;
+}
+
+/* Favorietenlijst */
+.favorite-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 16px;
+}
+
+.favorite-option input {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Actieknoppen */
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.modal-btn {
+  flex: 1;
+  border: none;
+  border-radius: 14px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.modal-btn.secondary {
+  background: #2a2a2a;
+  color: #fff;
+}
+
+.modal-btn.primary {
+  background: linear-gradient(180deg, #d60000, #8b0000);
+  color: #fff;
+}
+
+/* Snelle Acties met foto's */
+.quick-action-card {
+  display: flex;
+  flex-direction: column;
+  background: #111;
+  border: 1px solid rgba(255, 0, 0, 0.5);
+  border-radius: 18px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #fff;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.quick-action-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.quick-action-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+}
+
+.quick-action-content {
+  padding: 14px;
+}
+
+.quick-action-title {
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  margin-bottom: 6px !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  white-space: normal !important;
+  hyphens: none !important;
+}
+
+.quick-action-subtitle {
+  font-size: 0.65rem !important;
+  color: #bdbdbd !important;
+  line-height: 1.3 !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+}
+
+.quick-action-external {
+  margin-top: auto !important;
+  text-align: right !important;
+  font-size: 1.2rem !important;
+  color: #ffffff !important;
+}
+
+.competition-icon img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
