@@ -1,37 +1,63 @@
-const CACHE_NAME = "app-cache-v4";
+const CACHE_NAME = 'bal-enzo-v5';
 
-// Install
-self.addEventListener("install", (event) => {
-  console.log("SW geïnstalleerd");
+const FILES_TO_CACHE = [
+  './',
+  './index.html',
+  './style.css',
+  './app.js',
+  './manifest.json',
+  './icon.png',
+  './logo.png',
+  './hero.jpg'
+];
+
+// Installatie: bestanden vooraf cachen
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(FILES_TO_CACHE))
+  );
+
   self.skipWaiting();
 });
 
-// Activate
-self.addEventListener("activate", (event) => {
-  console.log("SW geactiveerd");
-
+// Activatie: oude caches verwijderen
+self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then((keys) =>
+    caches.keys().then(keys =>
       Promise.all(
-        keys.map((key) => {
+        keys.map(key => {
           if (key !== CACHE_NAME) {
             return caches.delete(key);
           }
         })
       )
-    )
+    ).then(() => self.clients.claim())
   );
-
-  self.clients.claim();
 });
 
-// Fetch (altijd nieuwste versie)
-self.addEventListener("fetch", (event) => {
+// Altijd eerst netwerk proberen
+self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
+
   event.respondWith(
     fetch(event.request)
-      .then((response) => {
+      .then(response => {
+        const clone = response.clone();
+
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, clone);
+        });
+
         return response;
       })
       .catch(() => caches.match(event.request))
   );
+});
+
+// Laat een nieuwe service worker onmiddellijk actief worden
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
