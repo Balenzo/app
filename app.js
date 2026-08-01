@@ -46,27 +46,27 @@ const favoriteOptions = {
   'breakplay-1': {
     icon: '🎱',
     title: 'Break & Play Reeks 1',
-    url: 'https://cuescore.com/tournament/POULE+1+BREAK+%2526+PLAY+-ZOMER+2026+%2AClubcompetitie%2A/79104529'
+    url: 'https://cuescore.com/tournament/POULE+1+BREAK+%2526+PLAY+%252F+HERFST+2026+%2AClubcompetitie%2A/85928236'
   },
   'breakplay-2': {
     icon: '🎱',
     title: 'Break & Play Reeks 2',
-    url: 'https://cuescore.com/tournament/POULE+2+BREAK+%2526+PLAY+-ZOMER+2026+%2AClubcompetitie%2A/79105222'
+    url: 'https://cuescore.com/tournament/POULE+2+BREAK+%2526+PLAY+%252F+HERFST+2026+%2AClubcompetitie%2A/85928569'
   },
   'breakplay-3': {
     icon: '🎱',
     title: 'Break & Play Reeks 3',
-    url: 'https://cuescore.com/tournament/POULE+3+BREAK+%2526+PLAY+-ZOMER+2026+%2AClubcompetitie%2A/79105237'
+    url: 'https://cuescore.com/tournament/POULE+3+BREAK+%2526+PLAY+%252F+HERFST+2026+%2AClubcompetitie%2A/85928635'
   },
   'breakplay-4': {
     icon: '🎱',
     title: 'Break & Play Reeks 4',
-    url: 'https://cuescore.com/tournament/POULE+4+BREAK+%2526+PLAY+-ZOMER+2026+%2AClubcompetitie%2A/79105255'
+    url: 'https://cuescore.com/tournament/POULE+4+BREAK+%2526+PLAY+%252F+HERFST+2026+%2AClubcompetitie%2A/85928797'
   },
   'breakplay-5': {
     icon: '🎱',
     title: 'Break & Play Reeks 5',
-    url: 'https://cuescore.com/tournament/POULE+5+BREAK+%2526+PLAY+-ZOMER+2026+%2AClubcompetitie%2A/79105273'
+    url: 'https://cuescore.com/tournament/POULE+5+BREAK+%2526+PLAY+%252F+HERFST+2026+%2AClubcompetitie%2A/85929085'
   },
   facebook: {
     icon: '📘',
