@@ -3103,11 +3103,6 @@ async function loadCueScoreActiveMatches() {
             ...eventIds
         );
 
-        /*
-         * Nieuwe actuele lijst opbouwen.
-         * Zo kunnen beëindigde wedstrijden niet
-         * als oude LIVE-wedstrijd blijven hangen.
-         */
         const currentLiveScores = {};
 
         for (const tournamentId of eventIds) {
@@ -3124,46 +3119,157 @@ async function loadCueScoreActiveMatches() {
                     : [];
 
             const activeMatches = matches.filter(
-                match => match.matchstatusCode === 1
+                match => Number(match.matchstatusCode) === 1
             );
 
-            activeMatches.forEach(match => {
+            for (const match of activeMatches) {
 
-                const tableId =
+                /*
+                 * Eerst proberen of dit een gewone
+                 * live wedstrijd met rechtstreekse tafel is.
+                 */
+                const directTableId =
                     Number(match.table?.tableId);
 
-                if (!tableId) return;
+                if (directTableId) {
 
-                currentLiveScores[tableId] = {
+                    currentLiveScores[directTableId] = {
+                        matchId: match.matchId,
+                        raceTo: match.raceTo,
+                        playerA: match.playerA?.name || "",
+                        playerB: match.playerB?.name || "",
+                        scoreA: match.scoreA ?? 0,
+                        scoreB: match.scoreB ?? 0
+                    };
 
-                    matchId:
-                        match.matchId,
+                    continue;
+                }
 
-                    raceTo:
-                        match.raceTo,
+                /*
+                 * Teamwedstrijd:
+                 * individuele wedstrijden ophalen via Worker.
+                 */
+                try {
 
-                    playerA:
-                        match.playerA?.name || "",
+                    const workerResponse = await fetch(
+                        `https://balenzo-cuescore.nicolasmintjens.workers.dev/?tournamentId=${tournamentId}&matchId=${match.matchId}`
+                    );
 
-                    playerB:
-                        match.playerB?.name || "",
+                    if (!workerResponse.ok) {
+                        continue;
+                    }
 
-                    scoreA:
-                        match.scoreA ?? 0,
+                    const workerData =
+                        await workerResponse.json();
 
-                    scoreB:
-                        match.scoreB ?? 0
+                    const individualMatches =
+                        Array.isArray(workerData.matches)
+                            ? workerData.matches
+                            : [];
 
-                };
+                    /*
+                     * Per tafel nemen we de meest recent
+                     * gestarte individuele wedstrijd.
+                     */
+                    const latestPerTable = {};
 
-            });
+                    individualMatches.forEach(individualMatch => {
+
+                        const tableText =
+                            String(individualMatch.table || "");
+
+                        const tableMatch =
+                            tableText.match(/Table\s+(\d+)\s+BEB&D/i);
+
+                        if (!tableMatch) {
+                            return;
+                        }
+
+                        const tableNumber =
+    String(Number(tableMatch[1]));
+
+const balEnzoTable =
+    balEnzoTables.find(
+        table => String(table.name) === tableNumber
+    );
+
+if (!balEnzoTable) {
+    return;
+}
+
+const tableId =
+    balEnzoTable.id;
+
+const startTime =
+    individualMatch.startTime
+        ? new Date(
+            individualMatch.startTime
+        ).getTime()
+        : 0;
+
+const existing =
+    latestPerTable[tableId];
+
+const existingStartTime =
+    existing?.startTime
+        ? new Date(
+            existing.startTime
+        ).getTime()
+        : 0;
+
+if (
+    !existing ||
+    startTime > existingStartTime
+) {
+    latestPerTable[tableId] =
+        individualMatch;
+}
+
+                    });
+
+                    Object.entries(
+                        latestPerTable
+                    ).forEach(
+                        ([tableId, individualMatch]) => {
+
+                            currentLiveScores[tableId] = {
+
+                                matchId:
+                                    individualMatch.matchId,
+
+                                raceTo:
+                                    individualMatch.raceTo,
+
+                                playerA:
+                                    individualMatch.playerA || "",
+
+                                playerB:
+                                    individualMatch.playerB || "",
+
+                                scoreA:
+                                    individualMatch.scoreA ?? 0,
+
+                                scoreB:
+                                    individualMatch.scoreB ?? 0
+
+                            };
+
+                        }
+                    );
+
+                } catch (workerError) {
+
+                    console.warn(
+                        "Individuele live wedstrijden laden mislukt:",
+                        workerError
+                    );
+
+                }
+
+            }
 
         }
 
-        /*
-         * Pas nadat alle CueScore-events gecontroleerd zijn,
-         * vervangen we de oude lijst.
-         */
         Object.keys(liveScoresData).forEach(tableId => {
             delete liveScoresData[tableId];
         });
@@ -3378,10 +3484,9 @@ function processCueScoreLiveMessage(message) {
     if (!tableId) return;
 
     if (
-        match.matchstatusCode !== 1 ||
-        match.matchstatus !== "playing"
+    Number(match.matchstatusCode) !== 1 ||
+    match.matchstatus !== "playing"
     ) {
-        delete liveScoresData[tableId];
         return;
     }
 
@@ -3461,7 +3566,11 @@ async function refreshLiveScores() {
 
     loadBalEnzoTables();
     await loadCueScoreActiveMatches();
-    connectCueScoreLive();
+
+    if (!liveScoresSocket ||
+        liveScoresSocket.readyState !== WebSocket.OPEN) {
+        connectCueScoreLive();
+    }
 
 }
 
