@@ -3173,31 +3173,52 @@ async function loadCueScoreActiveMatches() {
                      */
                     const latestPerTable = {};
 
-                    individualMatches.forEach(individualMatch => {
+                individualMatches.forEach(individualMatch => {
 
-                        const tableText =
-                            String(individualMatch.table || "");
+    const raceTo =
+        Number(individualMatch.raceTo);
 
-                        const tableMatch =
-                            tableText.match(/Table\s+(\d+)\s+BEB&D/i);
+    const scoreA =
+        Number(individualMatch.scoreA);
 
-                        if (!tableMatch) {
-                            return;
-                        }
+    const scoreB =
+        Number(individualMatch.scoreB);
 
-                        const tableNumber =
-    String(Number(tableMatch[1]));
+    const isFinished =
+        Number.isFinite(raceTo) &&
+        raceTo > 0 &&
+        (
+            scoreA >= raceTo ||
+            scoreB >= raceTo
+        );
 
-const balEnzoTable =
-    balEnzoTables.find(
-        table => String(table.name) === tableNumber
-    );
+    if (isFinished) {
+        return;
+    }
 
-if (!balEnzoTable) {
-    return;
-}
+    const tableText =
+        String(individualMatch.table || "");
 
-const tableId =
+    const tableMatch =
+        tableText.match(/Table\s+(\d+)\s+BEB&D/i);
+
+    if (!tableMatch) {
+        return;
+    }
+
+    const tableNumber =
+        String(Number(tableMatch[1]));
+
+    const balEnzoTable =
+        balEnzoTables.find(
+            table => String(table.name) === tableNumber
+        );
+
+    if (!balEnzoTable) {
+        return;
+    }
+
+    const tableId =
     balEnzoTable.id;
 
 const startTime =
