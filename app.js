@@ -1,4 +1,4 @@
-const APP_CHANGELOG_VERSION = "1.0";
+const APP_CHANGELOG_VERSION = "2.0";
 
 let currentCompetitionData = null;
 let currentCompetitionTournamentId = null;
@@ -286,13 +286,6 @@ const favoriteOptions = {
     action: () => openCompetitionDetail("74130139")
 },
 
-'competition-nl': {
-    icon: '🇳🇱',
-    title: tr('competition.netherlands', 'Competitie NL'),
-    url: null,
-    action: () => openCompetitionDetail("83574892")
-},
-
 'breakplay-1': {
     icon: '🎱',
     title: tr('competition.breakPlay1', 'Break & Play Reeks 1'),
@@ -524,11 +517,12 @@ function showChangelogIfNeeded() {
 
   alert(
     "🎉 Wat is er nieuw?\n\n" +
-    "• Live scores in app zelf\n" +
-    "• Competities + Break & Play rechtstreeks in app te bekijken\n" +
-    "• Tafelreservatie gebeurt in app zelf\n" +
-    "• Moneygames toegevoegd (ook voor trainingen zonder €)\n" +
-    "• Diverse verbeteringen"
+    "• 🆕 Start2Pool toegevoegd met oefeningen op verschillende niveaus\n" +
+    "• 🎱 Sparring Matches toegevoegd voor oefenwedstrijden\n" +
+    "• 🔴 Meldingen toegevoegd voor nieuwe activiteit bij Sparring Matches\n" +
+    "• 📺 Live Scores verder verbeterd\n" +
+    "• 🌍 Ondersteuning voor Nederlands, Frans en Engels\n" +
+    "• ⚡ Diverse verbeteringen en optimalisaties"
   );
 
   localStorage.setItem(
@@ -2960,6 +2954,11 @@ function openLiveScores() {
 
 function closeLiveScores() {
 
+    if (liveScoresRefreshTimer) {
+        clearInterval(liveScoresRefreshTimer);
+        liveScoresRefreshTimer = null;
+    }
+
     document.querySelectorAll(".screen").forEach(screen => {
         screen.classList.remove("active");
     });
@@ -2988,6 +2987,7 @@ const balEnzoTables = [
 
 let liveScoresSocket = null;
 let liveScoresData = {};
+let liveScoresRefreshTimer = null;
 
 
 /* ===========================
@@ -3074,11 +3074,11 @@ async function loadBalEnzoTables() {
         document.getElementById("liveScoresStatus");
 
     if (status) {
-        status.textContent = tr("live.loading", "Live gegevens laden...");
+        status.textContent =
+            tr("live.loading", "Live gegevens laden...");
     }
 
     renderLiveTables();
-
 }
 
 const balEnzoCueScoreEvents = [];
@@ -3173,7 +3173,7 @@ async function loadCueScoreActiveMatches() {
                      */
                     const latestPerTable = {};
 
-                individualMatches.forEach(individualMatch => {
+                    individualMatches.forEach(individualMatch => {
 
     const raceTo =
         Number(individualMatch.raceTo);
@@ -3202,23 +3202,23 @@ async function loadCueScoreActiveMatches() {
     const tableMatch =
         tableText.match(/Table\s+(\d+)\s+BEB&D/i);
 
-    if (!tableMatch) {
-        return;
-    }
+                        if (!tableMatch) {
+                            return;
+                        }
 
-    const tableNumber =
-        String(Number(tableMatch[1]));
+                        const tableNumber =
+    String(Number(tableMatch[1]));
 
-    const balEnzoTable =
-        balEnzoTables.find(
-            table => String(table.name) === tableNumber
-        );
+const balEnzoTable =
+    balEnzoTables.find(
+        table => String(table.name) === tableNumber
+    );
 
-    if (!balEnzoTable) {
-        return;
-    }
+if (!balEnzoTable) {
+    return;
+}
 
-    const tableId =
+const tableId =
     balEnzoTable.id;
 
 const startTime =
@@ -3296,13 +3296,21 @@ if (
         });
 
         Object.assign(
-            liveScoresData,
-            currentLiveScores
-        );
+    liveScoresData,
+    currentLiveScores
+);
 
-        renderLiveTables();
+renderLiveTables();
 
-    } catch (error) {
+const status =
+    document.getElementById("liveScoresStatus");
+
+if (status) {
+    status.textContent =
+        tr("live.connected", "● Live gegevens actief");
+}
+
+} catch (error) {
 
         console.error(
             "❌ CueScore livegegevens laden mislukt:",
@@ -3319,11 +3327,15 @@ if (
 
 function connectCueScoreLive() {
 
-    if (liveScoresSocket) {
-        try {
-            liveScoresSocket.close();
-        } catch (e) {}
-    }
+    if (
+    liveScoresSocket &&
+    (
+        liveScoresSocket.readyState === WebSocket.OPEN ||
+        liveScoresSocket.readyState === WebSocket.CONNECTING
+    )
+) {
+    return;
+}
 
     try {
 
@@ -3380,28 +3392,31 @@ function connectCueScoreLive() {
             }
         );
 
+liveScoresSocket.addEventListener(
+    "close",
+    function () {
 
-        liveScoresSocket.addEventListener(
-            "close",
-            function () {
-
-                console.log(
-                    "🔴 CueScore WebSocket gesloten"
-                );
-
-                const status =
-                    document.getElementById(
-                        "liveScoresStatus"
-                    );
-
-                if (status) {
-                    status.textContent =
-                        tr("live.disconnected", "Live verbinding verbroken");
-                }
-
-            }
+        console.log(
+            "🔴 CueScore WebSocket gesloten"
         );
 
+        liveScoresSocket = null;
+
+        const status =
+            document.getElementById(
+                "liveScoresStatus"
+            );
+
+        if (status) {
+            status.textContent =
+                tr(
+                    "live.disconnected",
+                    "Live verbinding verbroken"
+                );
+        }
+
+    }
+);
 
         liveScoresSocket.addEventListener(
             "error",
@@ -3571,6 +3586,14 @@ openLiveScores = async function () {
 
     loadBalEnzoTables();
     await loadCueScoreActiveMatches();
+
+    if (!liveScoresRefreshTimer) {
+        liveScoresRefreshTimer = setInterval(
+            loadCueScoreActiveMatches,
+            15000
+        );
+    }
+
     connectCueScoreLive();
 
 };
@@ -4648,12 +4671,35 @@ async function openMoneygames() {
   document.getElementById("moneygamesScreen").classList.add("active");
   window.scrollTo(0, 0);
 
-  showMoneygamesHelpIfNeeded(); 
+  showMoneygamesHelpIfNeeded();
 
   const user = await getCurrentUser();
 
   if (user) {
-    showOpenMoneygames();
+    const now =
+  new Date().toISOString();
+
+const storageKey =
+  `moneygamesLastSeenOpen_${user.id}`;
+
+const personalStorageKey =
+  `moneygamesLastSeenPersonal_${user.id}`;
+
+localStorage.setItem(
+  storageKey,
+  now
+);
+
+localStorage.setItem(
+  personalStorageKey,
+  now
+);
+
+    await markSelectedMoneygameReactionsAsSeen(user);
+
+await updateMoneygamesNotificationBadge();
+
+showOpenMoneygames();
   }
 }
 
@@ -4664,4 +4710,69 @@ function closeMoneygames() {
 
   document.getElementById("homeScreen").classList.add("active");
   window.scrollTo(0, 0);
+}
+
+/* =========================================================
+   START2POOL LEVEL TABS
+========================================================= */
+
+document.querySelectorAll(".start2pool-level-tab").forEach(button => {
+    button.addEventListener("click", () => {
+
+        const level = button.dataset.level;
+
+        // Actieve tab verwijderen
+        document.querySelectorAll(".start2pool-level-tab").forEach(tab => {
+            tab.classList.remove("active");
+        });
+
+        // Geklikte tab actief maken
+        button.classList.add("active");
+
+        // Alle level-inhoud verbergen
+        document.querySelectorAll(".start2pool-level-content").forEach(content => {
+            content.classList.remove("active");
+        });
+
+        // Juiste level tonen
+        const selectedLevel =
+            document.getElementById(
+                `start2PoolLevel${level.toUpperCase()}`
+            );
+
+        if (selectedLevel) {
+            selectedLevel.classList.add("active");
+        }
+    });
+});
+
+/* =========================================================
+   START2POOL EXERCISE NAVIGATION
+========================================================= */
+
+function openStart2PoolExercise() {
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen => screen.classList.remove("active"));
+
+    document
+        .getElementById("start2PoolExerciseScreen")
+        .classList.add("active");
+
+    window.scrollTo(0, 0);
+}
+
+
+function closeStart2PoolExercise() {
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen => screen.classList.remove("active"));
+
+    document
+        .getElementById("start2PoolScreen")
+        .classList.add("active");
+
+    window.scrollTo(0, 0);
 }

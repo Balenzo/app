@@ -370,6 +370,35 @@ body {
     font-weight: 600;
   }
 
+  .nav-icon-image {
+  display: block;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  opacity: 0.65;
+}
+
+.nav-item.active .nav-icon-image {
+  opacity: 1;
+  filter: brightness(0) saturate(100%) invert(42%) sepia(89%)
+    saturate(1869%) hue-rotate(331deg) brightness(104%) contrast(101%);
+}
+
+.start2pool-intro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 20px;
+}
+
+.start2pool-intro-logo {
+  display: block;
+  width: 85px;
+  max-width: 30%;
+  height: auto;
+  margin: 0 auto 10px;
+}
+
   /* =========================
     MODAL
   ========================= */
@@ -3362,4 +3391,364 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* =========================================================
+   START2POOL
+========================================================= */
+
+#start2PoolScreen .content {
+  padding-bottom: 100px;
+}
+
+/* Intro / logo */
+.start2pool-intro {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.start2pool-intro-logo {
+  display: block;
+  width: 100px;
+  max-width: 55%;
+  height: auto;
+  margin: 0 auto 12px;
+}
+
+.start2pool-month-label {
+  color: #999;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.start2pool-challenge-title {
+  margin: 0;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* Level tabs */
+.start2pool-level-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 0 0 16px;
+  padding: 4px;
+  background: #111;
+  border: 1px solid #242424;
+  border-radius: 12px;
+}
+
+.start2pool-level-tab {
+  appearance: none;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #888;
+  padding: 10px 4px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.start2pool-level-tab.active {
+  background: #ff4d4d;
+  color: #fff;
+}
+
+/* Level inhoud */
+.start2pool-level-content {
+  display: none;
+}
+
+.start2pool-level-content.active {
+  display: block;
+}
+
+/* Oefening afbeelding */
+.start2pool-drill-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid #242424;
+  margin-bottom: 18px;
+}
+
+/* Titel */
+.start2pool-level-content h3 {
+  color: #fff;
+  font-size: 19px;
+  margin: 0 0 10px;
+}
+
+/* Algemene tekst */
+.start2pool-level-content > p {
+  color: #bbb;
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0 0 14px;
+}
+
+/* Doel / Focus / Belangrijk */
+.start2pool-info-card {
+  background: #111;
+  border: 1px solid #242424;
+  border-radius: 12px;
+  padding: 14px;
+  margin-top: 10px;
+}
+
+.start2pool-info-card strong {
+  display: block;
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.start2pool-info-card p {
+  color: #aaa;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Waarschuwing */
+.start2pool-info-card.start2pool-warning {
+  border-color: #3a2f20;
+}
+
+/* Kleinere smartphones */
+@media (max-width: 380px) {
+  .start2pool-challenge-title {
+    font-size: 20px;
+  }
+
+  .start2pool-level-tab {
+    font-size: 12px;
+    padding: 9px 3px;
+  }
+
+  .start2pool-info-card {
+    padding: 12px;
+  }
+}
+
+.start2pool-page-header {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.start2pool-header-logo {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   START2POOL OVERZICHT
+========================================================= */
+
+.start2pool-overview-section {
+  margin-bottom: 28px;
+}
+
+.start2pool-overview-title {
+  margin: 0 0 12px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+
+/* OEFENING KAART */
+.start2pool-exercise-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: #111;
+  border: 1px solid #242424;
+  border-radius: 12px;
+
+  padding: 8px;
+
+  text-align: left;
+  cursor: pointer;
+}
+
+.start2pool-exercise-thumbnail {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 7px;
+  flex-shrink: 0;
+}
+
+.start2pool-exercise-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.start2pool-exercise-number {
+  color: #ff4d4d;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  margin-bottom: 2px;
+}
+
+.start2pool-exercise-title {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.start2pool-exercise-description {
+  color: #aaa;
+  font-size: 10px;
+  line-height: 1.3;
+  margin-bottom: 3px;
+}
+
+.start2pool-exercise-levels {
+  color: #777;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.start2pool-exercise-arrow {
+  color: #777;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+
+/* OVER START2POOL */
+.start2pool-about {
+  background: #111;
+  border: 1px solid #242424;
+  border-radius: 14px;
+
+  padding: 16px;
+}
+
+.start2pool-about h2 {
+  margin: 0 0 10px;
+
+  color: #fff;
+  font-size: 18px;
+}
+
+.start2pool-about h3 {
+  margin: 20px 0 8px;
+
+  color: #fff;
+  font-size: 15px;
+}
+
+.start2pool-about p {
+  margin: 0 0 12px;
+
+  color: #aaa;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.start2pool-about p:last-child {
+  margin-bottom: 0;
+}
+
+.start2pool-about strong {
+  color: #fff;
+}
+
+
+/* TERUGKNOP OEFENING */
+.start2pool-back-button {
+  background: none;
+  border: none;
+
+  color: #fff;
+  font-size: 24px;
+
+  cursor: pointer;
+
+  margin-right: 10px;
+  padding: 0;
+}
+
+/* START2POOL OVERVIEW INTRO */
+
+.start2pool-overview-intro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+
+  margin: 8px 0 22px;
+}
+
+.start2pool-overview-logo {
+  width: 82px;
+  height: 82px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.start2pool-overview-label {
+  color: #cfcfcf;
+  font-size: 11px;
+  line-height: 1.45;
+  letter-spacing: 1.2px;
+  font-weight: 500;
+}
+
+.start2pool-overview-intro-title {
+  color: #fff;
+  font-size: 20px;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.moneygames-home-image {
+  position: relative;
+}
+
+.moneygames-home-image img {
+  display: block;
+  width: 100%;
+}
+
+.moneygames-notification-badge {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+
+  min-width: 36px;
+  height: 36px;
+  padding: 0 7px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #e53935;
+  color: #fff;
+
+  border-radius: 999px;
+  border: 2px solid #111;
+
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
 }
