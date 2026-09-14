@@ -53,11 +53,27 @@ function moneygameLocale() {
     : "nl-BE";
 }
 
+function formatMoneygameDiscipline(discipline) {
+  if (discipline === "any") {
+    return moneygameTr(
+      "moneygames.anyDiscipline",
+      "Eender"
+    );
+  }
+
+  return discipline || "";
+}
+
 // =========================================================
 // CONFIGURATIE
 // =========================================================
 
-const MONEYGAME_DISCIPLINES = ["8-ball", "9-ball", "10-ball"];
+const MONEYGAME_DISCIPLINES = [
+  "8-ball",
+  "9-ball",
+  "10-ball",
+  "any"
+];
 
 const MONEYGAME_STATUSES = {
   OPEN: "open",
@@ -1235,10 +1251,16 @@ async function loadOpenMoneygames() {
     return;
   }
 
-  const filteredGames = (games || []).filter(game => {
-    if (currentMoneygamesFilter === "all") return true;
-    return game.discipline === currentMoneygamesFilter;
-  });
+const filteredGames = (games || []).filter(game => {
+  if (currentMoneygamesFilter === "all") {
+    return true;
+  }
+
+  return (
+    game.discipline === currentMoneygamesFilter ||
+    game.discipline === "any"
+  );
+});
 
   if (filteredGames.length === 0) {
     list.innerHTML = `
@@ -1380,7 +1402,9 @@ async function loadOpenMoneygames() {
           </span>
 
           <span class="moneygames-discipline">
-            ${escapeMoneygameHtml(game.discipline)}
+            ${escapeMoneygameHtml(
+  formatMoneygameDiscipline(game.discipline)
+)}
           </span>
         </div>
 
@@ -1703,7 +1727,9 @@ async function loadMyOpenMoneygames(user) {
           </span>
 
           <span class="moneygames-discipline">
-            ${escapeMoneygameHtml(game.discipline)}
+            ${escapeMoneygameHtml(
+  formatMoneygameDiscipline(game.discipline)
+)}
           </span>
         </div>
 
@@ -1992,7 +2018,9 @@ async function loadMyReactions(user) {
             </span>
 
             <span class="moneygames-discipline">
-              ${escapeMoneygameHtml(game.discipline)}
+              ${escapeMoneygameHtml(
+  formatMoneygameDiscipline(game.discipline)
+)}
             </span>
           </div>
 
@@ -2448,7 +2476,9 @@ async function loadMyPlannedMoneygames(user) {
           </span>
 
           <span class="moneygames-discipline">
-            ${escapeMoneygameHtml(game.discipline)}
+            ${escapeMoneygameHtml(
+  formatMoneygameDiscipline(game.discipline)
+)}
           </span>
         </div>
 
@@ -3757,7 +3787,9 @@ function buildMoneygameHistoryCard(item) {
         </span>
 
         <span class="moneygames-discipline">
-          ${escapeMoneygameHtml(item.discipline || "")}
+          ${escapeMoneygameHtml(
+  formatMoneygameDiscipline(item.discipline)
+)}
         </span>
       </div>
 
