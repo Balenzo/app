@@ -1,4 +1,4 @@
-const APP_CHANGELOG_VERSION = "2.0";
+const APP_CHANGELOG_VERSION = "2.1";
 
 let currentCompetitionData = null;
 let currentCompetitionTournamentId = null;
@@ -509,24 +509,30 @@ function openProfile() {
 }
 
 function showChangelogIfNeeded() {
-  const lastSeenVersion = localStorage.getItem('appChangelogVersion');
+  const lastSeenVersion =
+    localStorage.getItem(
+      "appChangelogVersion"
+    );
 
-  if (lastSeenVersion === APP_CHANGELOG_VERSION) {
+  if (
+    lastSeenVersion ===
+    APP_CHANGELOG_VERSION
+  ) {
     return;
   }
 
   alert(
     "🎉 Wat is er nieuw?\n\n" +
-    "• 🆕 Start2Pool toegevoegd met oefeningen op verschillende niveaus\n" +
-    "• 🎱 Sparring Matches toegevoegd voor oefenwedstrijden\n" +
-    "• 🔴 Meldingen toegevoegd voor nieuwe activiteit bij Sparring Matches\n" +
-    "• 📺 Live Scores verder verbeterd\n" +
-    "• 🌍 Ondersteuning voor Nederlands, Frans en Engels\n" +
-    "• ⚡ Diverse verbeteringen en optimalisaties"
+    "• 🔔 Pushmeldingen voor belangrijke acties bij Sparring Matches\n" +
+    "• ❗ Pop-up wanneer er een actie nodig is\n" +
+    "• 📅 Nieuwe overzichten voor geplande en gespeelde clubmatches\n" +
+    "• 🧹 Geannuleerde wedstrijden verwijderd uit Reacties en Historiek\n" +
+    "• ↻ Nieuwe reservatie starten vanuit het reservatiescherm\n" +
+    "• ✅ Duidelijkere bevestiging na registratie"
   );
 
   localStorage.setItem(
-    'appChangelogVersion',
+    "appChangelogVersion",
     APP_CHANGELOG_VERSION
   );
 }
@@ -3651,6 +3657,23 @@ function closeTableReservation() {
 
 }
 
+function restartTableReservation() {
+  const iframe =
+    document.getElementById(
+      "tableReservationIframe"
+    );
+
+  if (!iframe) return;
+
+  iframe.src =
+    "https://bal-enzo.sportsclubadmin.eu/reserveren";
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
 /* ===========================
    ONZE CLUB
 =========================== */
@@ -4711,6 +4734,37 @@ function closeMoneygames() {
   document.getElementById("homeScreen").classList.add("active");
   window.scrollTo(0, 0);
 }
+
+/*
+ * Mijn Matches rechtstreeks openen vanuit een pushmelding.
+ */
+document.addEventListener("DOMContentLoaded", async () => {
+  const currentUrl = new URL(window.location.href);
+
+  if (
+    currentUrl.searchParams.get("open") !==
+    "moneygames"
+  ) {
+    return;
+  }
+
+  /*
+   * Parameter verwijderen zodat Mijn Matches niet opnieuw
+   * opent wanneer de gebruiker de app later vernieuwt.
+   */
+  currentUrl.searchParams.delete("open");
+
+  window.history.replaceState(
+    {},
+    document.title,
+    currentUrl.pathname +
+      currentUrl.search +
+      currentUrl.hash
+  );
+
+  await openMoneygames();
+  showMyMoneygames();
+});
 
 /* =========================================================
    START2POOL LEVEL TABS
