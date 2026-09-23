@@ -57,7 +57,7 @@ function formatMoneygameDiscipline(discipline) {
   if (discipline === "any") {
     return moneygameTr(
       "moneygames.anyDiscipline",
-      "Eender"
+      "Multiball"
     );
   }
 
@@ -1516,7 +1516,7 @@ function buildMoneygameClubMatchCard(
     match.discipline === "any"
       ? moneygameTr(
           "moneygames.anyDiscipline",
-          "Eender"
+          "Multiball"
         )
       : match.discipline || "";
 
@@ -4439,6 +4439,22 @@ function buildMoneygameHistoryCard(item) {
   const statusLabel =
     formatMoneygameHistoryStatus(item.status);
 
+  let resultClass = "";
+
+  if (
+    item.result_type === "forfeit"
+  ) {
+    resultClass = "";
+  } else if (
+    item.winner_side &&
+    item.my_side
+  ) {
+    resultClass =
+      item.winner_side === item.my_side
+        ? " moneygames-history-win"
+        : " moneygames-history-loss";
+  }
+
   const result =
     item.result_type === "forfeit"
       ? "Forfait"
@@ -4448,7 +4464,7 @@ function buildMoneygameHistoryCard(item) {
         : moneygameTr("moneygames.noResult", "Geen uitslag");
 
   return `
-    <div class="moneygames-history-card">
+    <div class="moneygames-history-card${resultClass}">
 
       <div class="moneygames-open-card-top">
         <span class="moneygames-game-type">
