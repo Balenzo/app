@@ -642,13 +642,13 @@ function showChangelogIfNeeded() {
     return;
   }
 
-  alert(
+alert(
     "🎉 Wat is er nieuw?\n\n" +
-    "• 👤 Profiel zichtbaar in app met alle info\n" +
-    "• 🎱 Tornooien zichtbaar in app\n" +
-    "• 🔔 Volledig nieuwe lay-out\n" +
-    "• 🔎 Spelers zoeken op CueScore en uitgebreide spelersprofielen bekijken\n" +
-    "• 🏆 Tornooien uitgebreid met standen, podium, spelers en wedstrijden\n" +
+    "• ⚔️ Sparring Matches Doubles bugs fixed\n" +
+    "• 💬 Berichten toevoegen en uitwisselen bij reacties\n" +
+    "• ⚖️ Mogelijkheid om een match met handicap te spelen\n" +
+    "• 📅 Datum en startuur van geplande matches aanpassen\n" +
+    "• ❌ Geplande Sparring Matches kunnen geannuleerd worden\n" +
     "• ⚡ Diverse verbeteringen in snelheid, navigatie en gebruiksgemak"
 );
 
@@ -1603,6 +1603,7 @@ if (cueScoreLink) {
     "74130109": "https://cuescore.com/tournament/%2A%2A%2ACOMPETITIE+TWEEDE+PROVINCIALE+BPBF+VLAANDEREN+SEIZOEN+2026%2A%2A%2A/74130109",
     "74130127": "https://cuescore.com/tournament/%2A%2A%2ACOMPETITIE+DERDE+PROVINCIALE+BPBF+VLAANDEREN+SEIZOEN+2026%2A%2A%2A/74130127",
     "74130139": "https://cuescore.com/tournament/%2A%2A%2ABEKER%252FCOUPE+BPBF+VLAANDEREN+2026%2A%2A%2A/74130139",
+    "83574874": "https://cuescore.com/tournament/Pool+Eredivisie+2026%252F2027/83574874",
     "83574892": "https://cuescore.com/tournament/Pool+Tweede+Divisie+Zuid+2026%252F2027/83574892",
 
     "85928236": "https://cuescore.com/tournament/POULE+1+BREAK+%2526+PLAY+%252F+HERFST+2026+%2AClubcompetitie%2A/85928236",
@@ -1654,7 +1655,9 @@ const mvpPanel =
 const hasMvp = [
     "74130085",
     "74130109",
-    "74130127"
+    "74130127",
+    "83574874",
+    "83574892"
 ].includes(String(tournamentId));
 
 if (mvpTab && mvpPanel) {

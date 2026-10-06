@@ -14,6 +14,79 @@
     <link href="icon.png" rel="apple-touch-icon" />
   </head>
   <body>
+
+    <!-- =========================
+         DESKTOP SIDEBAR
+         Alleen zichtbaar vanaf 1000px
+    ========================== -->
+    <aside class="desktop-sidebar" aria-label="Desktop navigatie">
+      <div class="desktop-sidebar-brand">
+        <img src="balenzologo.png" alt="Bal Enzo" />
+        <div>
+          <strong>Bal Enzo</strong>
+          <span>Billiards &amp; Darts</span>
+        </div>
+      </div>
+
+      <nav class="desktop-menu">
+        <button class="desktop-menu-main" type="button"
+          onclick="document.querySelector('.bottom-nav .nav-item[data-target=&quot;homeScreen&quot;]').click()">
+          <span>⌂</span> Home
+        </button>
+
+        <details class="desktop-menu-group" open>
+          <summary><span>🏆</span> Competities</summary>
+
+          <details class="desktop-menu-subgroup" open>
+            <summary>Brabant / Antwerpen</summary>
+            <button type="button" onclick="openCompetitionDetail(74130085)">Eerste Klasse</button>
+            <button type="button" onclick="openCompetitionDetail(74130109)">Tweede Klasse</button>
+            <button type="button" onclick="openCompetitionDetail(74130127)">Derde Klasse</button>
+            <button type="button" onclick="openCompetitionDetail(74130139)">Beker</button>
+          </details>
+
+          <details class="desktop-menu-subgroup">
+            <summary>Break &amp; Play</summary>
+            <button type="button" onclick="openCompetitionDetail(85928236)">Reeks 1</button>
+            <button type="button" onclick="openCompetitionDetail(85928569)">Reeks 2</button>
+            <button type="button" onclick="openCompetitionDetail(85928635)">Reeks 3</button>
+            <button type="button" onclick="openCompetitionDetail(85928797)">Reeks 4</button>
+            <button type="button" onclick="openCompetitionDetail(85929085)">Reeks 5</button>
+          </details>
+
+          <details class="desktop-menu-subgroup">
+            <summary>Tornooien</summary>
+            <button type="button" onclick="openCountryTournaments('belgium')">België</button>
+            <button type="button" onclick="openCountryTournaments('netherlands')">Nederland</button>
+          </details>
+        </details>
+
+        <button class="desktop-menu-main" type="button"
+          onclick="document.querySelector('.bottom-nav .nav-item[data-target=&quot;start2PoolScreen&quot;]').click()">
+          <span>🎱</span> Start2Pool
+        </button>
+
+        <details class="desktop-menu-group">
+          <summary><span>⚔</span> Sparring Matches</summary>
+          <button type="button" onclick="openMoneygames(); setTimeout(() => showOpenMoneygames(), 0)">Open Matches</button>
+          <button type="button" onclick="openMoneygames(); setTimeout(() => showMyMoneygames(), 0)">Mijn Matches</button>
+          <button type="button" onclick="openMoneygames(); setTimeout(() => showPlannedClubMoneygames(), 0)">Geplande Matches</button>
+          <button type="button" onclick="openMoneygames(); setTimeout(() => showPlayedClubMoneygames(), 0)">Gespeelde Matches</button>
+        </details>
+
+        <details class="desktop-menu-group">
+          <summary><span>🏠</span> Club</summary>
+          <button type="button" onclick="openTableReservation()">Tafel reserveren</button>
+          <button type="button" onclick="openOurClub()">Onze Club</button>
+        </details>
+
+        <button class="desktop-menu-main" type="button"
+          onclick="document.querySelector('.bottom-nav .nav-item[data-target=&quot;profileScreen&quot;]').click()">
+          <span>👤</span> Profiel
+        </button>
+      </nav>
+    </aside>
+
     <!-- =========================
        HOME SCREEN
   ========================== -->
@@ -724,16 +797,39 @@
                 <label data-i18n="ui.race.to" for="moneygamesRaceTo">
                   Race To
                 </label>
-                <input
-                  data-i18n-placeholder="ui.bijvoorbeeld.7"
-                  id="moneygamesRaceTo"
-                  min="1"
-                  placeholder="Bijvoorbeeld 7"
-                  step="1"
-                  type="number"
-                />
+               <input
+  data-i18n-placeholder="ui.bijvoorbeeld.7"
+  id="moneygamesRaceTo"
+  min="1"
+  placeholder="Bijvoorbeeld 7"
+  step="1"
+  type="number"
+/>
 
-                <label data-i18n="ui.datum" for="moneygamesDate"> Datum </label>
+<label
+  for="moneygamesHandicap"
+  style="
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    cursor: pointer;
+  "
+>
+  <input
+    id="moneygamesHandicap"
+    type="checkbox"
+    style="
+      width: 20px;
+      height: 20px;
+      margin: 0;
+    "
+  />
+  <span>Deze match wordt met handicap gespeeld</span>
+</label>
+
+<label data-i18n="ui.datum" for="moneygamesDate"> Datum </label>
                 <div
                   class="moneygames-picker-field"
                   onclick="
@@ -1443,18 +1539,30 @@
   <span data-i18n="ui.competities.2">Competities</span>
 </div>
       <div class="tab-bar">
-        <button
-          class="tab active"
-          data-i18n="ui.brabant.antwerpen"
-          data-tab="brabant"
-        >
-          Brabant / Antwerpen
-        </button>
-        <button class="tab" data-tab="breakplay">Break &amp; Play</button>
-        <button class="tab" data-i18n="ui.tornooien" data-tab="tournaments">
-          Tornooien
-        </button>
-      </div>
+  <button
+    class="tab active"
+    data-i18n="ui.brabant.antwerpen"
+    data-tab="brabant"
+  >
+    Brabant / Antwerpen
+  </button>
+
+  <button
+    class="tab"
+    data-tab="breakplay"
+  >
+    Break &amp; Play
+  </button>
+
+  <button
+    class="tab"
+    data-i18n="ui.tornooien"
+    data-tab="tournaments"
+  >
+    Tornooien
+  </button>
+</div>
+
       <main class="content">
         <!-- BRABANT / ANTWERPEN -->
         <div class="tab-content active" id="tab-brabant">
@@ -1595,7 +1703,8 @@
           </button>
 
         </div>
-        <!-- BREAK & PLAY -->
+
+<!-- BREAK & PLAY -->
         <div class="tab-content" id="tab-breakplay">
           <!-- REEKS 1 -->
           <div
@@ -3012,3 +3121,4 @@
 
   </body>
 </html>
+  
